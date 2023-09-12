@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:56:59 by vdenisse          #+#    #+#             */
-/*   Updated: 2023/07/31 10:51:54 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:27:04 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	increase_buffer(char **saved, int fd)
 {
@@ -108,26 +108,26 @@ int	ft_read(char **new_read, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*saved;
+	static char	*saved[4096];
 	char		*next_line;
 	size_t		saved_size;
 	int			bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	saved_size = ft_strlen(saved);
+	saved_size = ft_strlen(saved[fd]);
 	bytes_read = -1;
-	while (ft_strchr((const char *)saved, '\n') == -1 && bytes_read != 0)
+	while (ft_strchr((const char *)saved[fd], '\n') == -1 && bytes_read != 0)
 	{
-		bytes_read = increase_buffer(&saved, fd);
+		bytes_read = increase_buffer(&saved[fd], fd);
 		saved_size += bytes_read;
 		if (saved_size == (size_t)0 || bytes_read == -1)
 		{
-			free(saved);
-			saved = NULL;
+			free(saved[fd]);
+			saved[fd] = NULL;
 			return ((void *)0);
 		}
 	}
-	ft_extract_line(&next_line, &saved, saved_size, bytes_read);
+	ft_extract_line(&next_line, &saved[fd], saved_size, bytes_read);
 	return (next_line);
 }
