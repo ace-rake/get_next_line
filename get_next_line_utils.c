@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:10:52 by vdenisse          #+#    #+#             */
-/*   Updated: 2023/04/25 15:25:05 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/07/14 11:16:01 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -50,7 +50,7 @@ size_t	ft_strcat(char *dst, const char *src)
 returns index of first occurence of (char)c in (const char *)s
 return -1 if not found
 */
-int	ft_strchr(const char *s, char c)
+int	ft_strchr_gnl(const char *s, char c)
 {
 	int	index;
 
@@ -85,7 +85,7 @@ size_t	ft_strcpy(char *dst, const char *src, size_t n)
 	return (ft_strlen(src));
 }
 
-int	ft_substr(char const *s, char **substr, unsigned int start, size_t len)
+int	ft_substr_gnl(char const *s, char **substr, unsigned int start, size_t len)
 {
 	size_t	sublen;
 	size_t	s_len;

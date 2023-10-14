@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:56:59 by vdenisse          #+#    #+#             */
-/*   Updated: 2023/07/31 10:51:54 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:57:54 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -46,10 +46,10 @@ int	ft_extract_line(char **next_line,
 {
 	size_t	index;
 
-	index = (size_t)ft_strchr(*saved, '\n');
+	index = (size_t)ft_strchr_gnl(*saved, '\n');
 	if (index == (size_t)-1)
-		index = (size_t)ft_strchr(*saved, '\0');
-	if (!ft_substr((char const *)*saved, &(*next_line), 0, index + 1))
+		index = (size_t)ft_strchr_gnl(*saved, '\0');
+	if (!ft_substr_gnl((char const *)*saved, &(*next_line), 0, index + 1))
 	{
 		free(*next_line);
 		return (-1);
@@ -77,10 +77,10 @@ int	reduce_buffer(char **saved, size_t saved_size, int bytes_read)
 	index = 0;
 	if (*saved[0] == '\0')
 		return (1);
-	index = ft_strchr(*saved, '\n');
+	index = ft_strchr_gnl(*saved, '\n');
 	if (index == (size_t)-1)
 		return (1);
-	if (!ft_substr(*saved, &new_buffer, index + 1, saved_size))
+	if (!ft_substr_gnl(*saved, &new_buffer, index + 1, saved_size))
 	{
 		free(new_buffer);
 		return (0);
@@ -106,7 +106,7 @@ int	ft_read(char **new_read, int fd)
 	return (bytes_read);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, int free_saved)
 {
 	static char	*saved;
 	char		*next_line;
@@ -117,7 +117,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	saved_size = ft_strlen(saved);
 	bytes_read = -1;
-	while (ft_strchr((const char *)saved, '\n') == -1 && bytes_read != 0)
+	while (ft_strchr_gnl((const char *)saved, '\n') == -1 && bytes_read != 0)
 	{
 		bytes_read = increase_buffer(&saved, fd);
 		saved_size += bytes_read;
@@ -129,5 +129,8 @@ char	*get_next_line(int fd)
 		}
 	}
 	ft_extract_line(&next_line, &saved, saved_size, bytes_read);
+	if (free_saved)
+		free(saved);
+	(void)free_saved;
 	return (next_line);
 }
