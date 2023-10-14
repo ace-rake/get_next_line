@@ -6,12 +6,12 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:10:52 by vdenisse          #+#    #+#             */
-/*   Updated: 2023/08/02 16:27:03 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:39:48 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_gnl(const char *s)
 {
 	size_t	len;
 
@@ -32,8 +32,8 @@ size_t	ft_strcat(char *dst, const char *src)
 	size_t	dst_len;
 	size_t	src_len;
 
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
+	dst_len = ft_strlen_gnl(dst);
+	src_len = ft_strlen_gnl(src);
 	if (!dst)
 		return (src_len);
 	i = 0;
@@ -82,7 +82,7 @@ size_t	ft_strcpy(char *dst, const char *src, size_t n)
 		i++;
 	}
 	dst[i] = '\0';
-	return (ft_strlen(src));
+	return (ft_strlen_gnl(src));
 }
 
 int	ft_substr(char const *s, char **substr, unsigned int start, size_t len)
@@ -94,7 +94,7 @@ int	ft_substr(char const *s, char **substr, unsigned int start, size_t len)
 	index = 0;
 	if (!s)
 		return (0);
-	s_len = ft_strlen(s);
+	s_len = ft_strlen_gnl(s);
 	sublen = 0;
 	if (start < s_len)
 		sublen = s_len - start;

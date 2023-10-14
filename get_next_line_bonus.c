@@ -6,7 +6,7 @@
 /*   By: vdenisse <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:56:59 by vdenisse          #+#    #+#             */
-/*   Updated: 2023/08/02 16:27:04 by vdenisse         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:39:47 by vdenisse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -22,7 +22,7 @@ size_t	increase_buffer(char **saved, int fd)
 	bytes_read = ft_read(&new_read, fd);
 	if (bytes_read <= 0 || bytes_read > BUFFER_SIZE)
 		return (bytes_read);
-	new_len = ft_strlen(new_read) + ft_strlen(*saved);
+	new_len = ft_strlen_gnl(new_read) + ft_strlen_gnl(*saved);
 	new_buffer = (char *)malloc((new_len + 1) * sizeof(char));
 	if (!new_buffer)
 	{
@@ -30,7 +30,7 @@ size_t	increase_buffer(char **saved, int fd)
 		return (0);
 	}
 	new_buffer[0] = '\0';
-	ft_strcpy(new_buffer, *saved, ft_strlen(*saved));
+	ft_strcpy(new_buffer, *saved, ft_strlen_gnl(*saved));
 	ft_strcat(new_buffer, new_read);
 	if (*saved)
 		free(*saved);
@@ -106,6 +106,8 @@ int	ft_read(char **new_read, int fd)
 	return (bytes_read);
 }
 
+
+//add free saved if i ever use this
 char	*get_next_line(int fd)
 {
 	static char	*saved[4096];
@@ -115,7 +117,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	saved_size = ft_strlen(saved[fd]);
+	saved_size = ft_strlen_gnl(saved[fd]);
 	bytes_read = -1;
 	while (ft_strchr((const char *)saved[fd], '\n') == -1 && bytes_read != 0)
 	{
